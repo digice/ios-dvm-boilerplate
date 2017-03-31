@@ -32,7 +32,7 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
   // MARK: - NSObject Methods
   
   override init() {
-    self.data = AppDataManager.shared.data.location
+    self.data = AppManager.shared.data.location
     self.manager = CLLocationManager()
     self.authStatus = CLLocationManager.authorizationStatus()
     super.init()
