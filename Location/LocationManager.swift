@@ -15,7 +15,7 @@ protocol LocationManagerDelegate {
   func didSaveLocationData()
 }
 
-class LocationMangager : NSObject, CLLocationManagerDelegate {
+class LocationManager : NSObject, CLLocationManagerDelegate {
   
   // MARK: - Properties
   
