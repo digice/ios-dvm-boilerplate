@@ -53,8 +53,7 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
       }
     } else {
       self.manager.requestAlwaysAuthorization()
-      // you may want to use a callback to prevent the app from a death spiral in case user denies access
-      self.toggleStatus()
+      // you may want to use a callback to try again. In this version, updating is not automatic
     }
 
   }
