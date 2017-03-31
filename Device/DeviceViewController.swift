@@ -26,6 +26,7 @@ class DeviceViewController: UIViewController, DeviceManagerDelegate {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(DeviceViewController.dismissKeyboard)))
     self.manager.delegate = self
     self.updateView()
   }
@@ -53,6 +54,10 @@ class DeviceViewController: UIViewController, DeviceManagerDelegate {
 
   }
 
+  func dismissKeyboard(){
+    self.view.endEditing(true)
+  }
+
   // MARK: - DeviceManagerDelegate Methods
 
   func didSaveDeviceData() {
@@ -61,6 +66,7 @@ class DeviceViewController: UIViewController, DeviceManagerDelegate {
 
   // MARK: - Actions
 
+
   @IBAction func saveDevice(_ sender: Any) {
 
     if let nameText = self.nameField.text {
@@ -68,7 +74,7 @@ class DeviceViewController: UIViewController, DeviceManagerDelegate {
         self.manager.data.name = nameText
       }
     }
-
+    
     self.manager.save()
 
   }
