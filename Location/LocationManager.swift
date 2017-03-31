@@ -19,24 +19,52 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
   
   // MARK: - Properties
   
-  let manager : CLLocationManager
-  
   var delegate : LocationManagerDelegate?
   
   let data : LocationData
   
+  let manager : CLLocationManager
+  
+  var authStatus : CLAuthorizationStatus
+  
+  var isUpdating : Bool = false
+  
   // MARK: - NSObject Methods
   
   override init() {
+    self.data = AppDataManager.shared.data.location
     self.manager = CLLocationManager()
-    self.data = AppManager.shared.data.location
+    self.authStatus = CLLocationManager.authorizationStatus()
+    super.init()
+    self.manager.delegate = self
+  }
+
+  // MARK: - Custom Methods
+  
+  func toggleStatus() {
+
+    if self.authStatus == .authorizedAlways {
+      if self.isUpdating == true {
+        self.manager.stopUpdatingLocation()
+        self.isUpdating = false
+      } else {
+        self.manager.startUpdatingLocation()
+        self.isUpdating = true
+      }
+    } else {
+      self.manager.requestAlwaysAuthorization()
+      // you may want to use a callback to prevent the app from a death spiral in case user denies access
+      self.toggleStatus()
+    }
+
   }
 
   // MARK: - CLLocationManagerDelegate Methods
-
+  
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
     // extract coordinates
+    self.isUpdating = true
     let coords = locations[0].coordinate
     self.data.latitude = coords.latitude
     self.data.longitude = coords.longitude
@@ -51,28 +79,11 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 
     // how do you want to handle this?
-    if CLLocationManager.authorizationStatus() != .authorizedAlways {
-      manager.requestAlwaysAuthorization()
-    }
-
-    // notify delegate if we have one
-    if let d = self.delegate {
-      d.didChangeAuthorizationStatus()
-    }
-
-  }
-
-  // MARK: - Manager Methods
-
-  func save() {
-
-    // ask the AppManager to save all its data
-    let am = AppManager.shared
-    am.save()
+    self.authStatus = CLLocationManager.authorizationStatus()
     
     // notify delegate if we have one
     if let d = self.delegate {
-      d.didSaveLocationData()
+      d.didChangeAuthorizationStatus()
     }
 
   }
