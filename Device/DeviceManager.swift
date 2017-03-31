@@ -19,7 +19,7 @@ class DeviceManager {
   let data : DeviceData
 
   init() {
-    self.data = AppDataManager.shared.data.device
+    self.data = AppManager.shared.data.device
   }
 
   // MARK: - Custom Methods
