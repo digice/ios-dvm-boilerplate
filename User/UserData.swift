@@ -82,4 +82,70 @@ class UserData : NSObject, NSCoding {
 
   }
 
+  // MARK: - Custom Methods
+
+  // returns a string to use as the body of an API request
+  func httpBody() -> String {
+
+    // initialize empty dictionary
+    var params : [String:String] = [:]
+    
+    // define params
+    if let u = self.username {
+      params["u"] = u
+    }
+
+    if let p = self.password {
+      params["p"] = p
+    }
+
+    if let e = self.email {
+      params["e"] = e
+    }
+
+    if let f = self.first {
+      params["f"] = f
+    }
+
+    if let l = self.last {
+      params["l"] = l
+    }
+
+    // build string
+    var returnStr = ""
+    var i = 1
+    let c = params.count
+    for (key, value) in params {
+      returnStr.append("\(key)=\(value)")
+      if i < c {
+        returnStr.append("&")
+      }
+      i += 1
+    }
+    
+    return returnStr
+
+  }
+
+  // update local properties from a dictionary, i.e. from an API response
+  func updateFromDict(dict: [String:String]) {
+    
+    if let u = dict["username"] {
+      self.username = u
+    }
+    
+    if let e = dict["email"] {
+      self.email = e
+    }
+
+    if let f = dict["first"] {
+      self.first = f
+    }
+
+    if let l = dict["last"] {
+      self.last = l
+    }
+
+  }
+  
 }
