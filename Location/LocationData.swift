@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-class Location : NSObject, NSCoding
+class LocationData : NSObject, NSCoding
 {
 
   // MARK: - Optional Properties
