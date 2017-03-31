@@ -71,6 +71,30 @@ class UserViewController: UIViewController, UserManagerDelegate {
 
   @IBAction func saveUserData(_ sender: Any) {
 
+    if let u = self.usernameField.text {
+      if u.characters.count > 0 {
+        self.manager.data.username = u
+      }
+    }
+    
+    if let e = self.emailField.text {
+      if e.characters.count > 0 {
+        self.manager.data.email = e
+      }
+    }
+    
+    if let f = self.firstField.text {
+      if f.characters.count > 0 {
+        self.manager.data.first = f
+      }
+    }
+    
+    if let l = self.lastField.text {
+      if l.characters.count > 0 {
+        self.manager.data.last = l
+      }
+    }
+    
     self.manager.save()
 
   }
