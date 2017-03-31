@@ -16,7 +16,7 @@ class DeviceManager {
 
   var delegate : DeviceManagerDelegate?
 
-  let data : Device
+  let data : DeviceData
 
   init() {
     self.data = AppDataManager.shared.data.device
