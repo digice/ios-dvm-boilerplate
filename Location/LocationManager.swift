@@ -19,6 +19,8 @@ class LocationMangager : NSObject, CLLocationManagerDelegate {
   
   // MARK: - Properties
   
+  let manager : CLLocationManager
+  
   var delegate : LocationManagerDelegate?
   
   let data : LocationData
@@ -26,6 +28,7 @@ class LocationMangager : NSObject, CLLocationManagerDelegate {
   // MARK: - NSObject Methods
   
   override init() {
+    self.manager = CLLocationManager()
     self.data = AppManager.shared.data.location
   }
 
