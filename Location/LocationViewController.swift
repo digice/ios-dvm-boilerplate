@@ -1,6 +1,6 @@
 //
 //  LocationViewController.swift
-//  Grouper
+//  DVM-Boilerplate
 //
 //  Created by Digices LLC on 3/31/17.
 //  Copyright © 2017 Digices LLC. All rights reserved.
@@ -11,19 +11,19 @@ import UIKit
 class LocationViewController: UIViewController, LocationManagerDelegate {
 
   // MARK: - Properties
-  
+
   let manager : LocationManager = LocationManager()
-  
+
   // MARK: - Outlets
-  
+
   @IBOutlet weak var latitudeLabel: UILabel!
-  
+
   @IBOutlet weak var longitudeLabel: UILabel!
-  
+
   @IBOutlet weak var toggleButton: UIButton!
-  
+
   // MARK: - UIViewController Methods
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     self.manager.delegate = self
@@ -35,13 +35,13 @@ class LocationViewController: UIViewController, LocationManagerDelegate {
   }
 
   // MARK: - Custom Methods
-  
+
   func updateView() {
-    
+
     if let x = self.manager.data.latitude {
       self.latitudeLabel.text = "\(x)"
     }
-    
+
     if let y = self.manager.data.longitude {
       self.longitudeLabel.text = "\(y)"
     }
@@ -53,20 +53,18 @@ class LocationViewController: UIViewController, LocationManagerDelegate {
       self.latitudeLabel.text = ""
       self.longitudeLabel.text = ""
     }
-    
+
   }
-  
-  
+
   // MARK: - Actions
 
   @IBAction func toggleStatus(_ sender: Any) {
     self.manager.toggleStatus()
     self.updateView()
   }
-  
-  
+
   // MARK: - LocationManagerDelegate Methods
-  
+
   func didUpdateLocation() {
     self.updateView()
   }
@@ -79,5 +77,5 @@ class LocationViewController: UIViewController, LocationManagerDelegate {
     // set a message label?
     // update remote API?
   }
-  
+
 }
