@@ -24,11 +24,14 @@ class UserViewController: UIViewController, UserManagerDelegate {
 
   @IBOutlet weak var lastField: UITextField!
 
+  @IBOutlet weak var messageLabel: UILabel!
   // MARK: - UIViewController Methods
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserViewController.dismissKeyboard)))
     self.manager.delegate = self
+    self.updateView()
   }
 
   override func didReceiveMemoryWarning() {
@@ -59,18 +62,24 @@ class UserViewController: UIViewController, UserManagerDelegate {
       self.lastField.text = l
     }
 
+    self.messageLabel.text = ""
+
   }
 
+  func dismissKeyboard(){
+    self.view.endEditing(true)
+  }
+  
   // MARK: - UserManagerDelegate Methods
 
   func didSaveData() {
-    // update message label?
+    self.messageLabel.text = "User Info Saved"
   }
 
   // MARK: - Actions
 
-  @IBAction func saveUserData(_ sender: Any) {
-
+  @IBAction func saveData(_ sender: Any) {
+    
     if let u = self.usernameField.text {
       if u.characters.count > 0 {
         self.manager.data.username = u
